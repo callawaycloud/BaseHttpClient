@@ -1,3 +1,6 @@
+/**
+* Base Client v1.0
+*/
 public abstract class BaseHttpClient {
     protected String baseProductionEndpoint;
 

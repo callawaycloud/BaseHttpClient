@@ -1,3 +1,6 @@
+/**
+* Base JSON Client v1.0
+*/
 public abstract class BaseHttpJsonClient extends BaseHttpClient {
 
     public BaseHttpJsonClient(String baseEndpoint) {
