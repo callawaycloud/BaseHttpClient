@@ -23,7 +23,7 @@ public abstract class BaseHttpClient {
     public String baseEndpoint{
         get{
             baseEndpoint = baseProductionEndpoint;
-            if(isSandbox){
+            if(baseSandboxEndpoint != null && isSandbox){
                 baseEndpoint = baseSandboxEndpoint;
             }
             return baseEndpoint;
