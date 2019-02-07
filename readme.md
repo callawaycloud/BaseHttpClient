@@ -14,7 +14,7 @@ A base class to make it quick and easy to implement a Http Client.  Designed pri
 - `BaseHttpJsonClient`: Extends `BaseHttpClient` with automatic deserialization of JSON
 - `BaseHttpClientTest`: unit tests
 
-*will eventually implement an `BaseHttpJsonClient` should I ever need one. (PR's welcome)*
+*will eventually implement an `BaseHttpXMLClient` should I ever need one. (PR's welcome)*
 
 ## Usage
 
