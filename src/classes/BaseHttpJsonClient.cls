@@ -1,5 +1,5 @@
 /**
-* Base JSON Client v1.0
+* Base JSON Client v1.1
 */
 public abstract class BaseHttpJsonClient extends BaseHttpClient {
 
@@ -21,9 +21,12 @@ public abstract class BaseHttpJsonClient extends BaseHttpClient {
 
         HttpResponse resp = super.request(method, uri, qryParams, body);
         try{
+            if(returnType == null){
+                return null;
+            }
             return parseResponse(resp, returnType);
         }catch(Exception e){
-            return new ResponseJsonParseException(resp, returnType);
+            throw new ResponseJsonParseException(resp, returnType);
         }
     }
 
