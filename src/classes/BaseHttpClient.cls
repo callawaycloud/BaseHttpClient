@@ -1,5 +1,6 @@
 /**
-* Base Client v1.1
+* Base Client v1.2
+* giturl: https://github.com/ChuckJonas/BaseHttpClient
 */
 public abstract class BaseHttpClient {
     protected String baseProductionEndpoint;
@@ -36,30 +37,45 @@ public abstract class BaseHttpClient {
       * @param baseEndpoint: the base endpoint to send all request to (typically HOST)
       */
     public BaseHttpClient(String baseEndpoint) {
-		this.baseProductionEndpoint = baseEndpoint;
-	}
+        this.baseProductionEndpoint = baseEndpoint;
+    }
 
     /**
       * @description: build request -> send request -> check response -> parse response body (optional)
       * @param method: HTTP Method to send
       * @param uri: the URI.  Realitive to base endpoint
       * @param qryParams: url query params to add to URI
-      * @param body: Request Body
+      * @param body: Request Body. Can be string, blob or other.  If other, will automaticly call JSON.serialize
       * @return The HttpResponse object
     */
     protected virtual HttpResponse request(String method, String uri,
-                                Map<String, String> qryParams, String body){
+                                Map<String, String> qryParams, Object body){
 
         uri = buildEndpoint(uri, qryParams);
         HttpRequest req = genRequest(method, uri);
-        if(body != null){
-            req.setBody(body);
-        }
+        setRequestBody(req, body);
         HttpResponse resp = sendRequest(req);
         checkResponse(req, resp);
         return resp;
     }
 
+    /**
+      * @description: sets the request body based on the incoming object type
+      * @param req: HttpRequest req to set the body on
+      * @param body: Request Body. Can be string, blob or other.  If other, will automaticly call JSON.serialize
+      * @return Void.  Mutates req.body
+    */
+    protected virtual void setRequestBody(HttpRequest req, Object body){
+        if(body != null){
+            if(body instanceOf String){
+                req.setBody((String)body);
+            }else if(body instanceOf Blob){
+                req.setBodyAsBlob((Blob)body);
+            }else{
+                req.setBody(JSON.serialize(body));
+            }
+        }
+    }
 
     /** FIRE! */
     protected virtual HttpResponse sendRequest(HttpRequest req){

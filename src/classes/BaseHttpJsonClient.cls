@@ -1,11 +1,12 @@
 /**
-* Base JSON Client v1.1
+* Base JSON Client v1.2
+* giturl: https://github.com/ChuckJonas/BaseHttpClient
 */
 public abstract class BaseHttpJsonClient extends BaseHttpClient {
 
     public BaseHttpJsonClient(String baseEndpoint) {
         super(baseEndpoint);
-	}
+    }
 
     /**
       * @description: build request -> send request -> check response -> parse response body (optional)
@@ -17,7 +18,7 @@ public abstract class BaseHttpJsonClient extends BaseHttpClient {
       * @return The parsed object (if appliciable)
       */
     protected virtual Object request(String method, String uri,
-                                Map<String, String> qryParams, String body, Type returnType){
+                                Map<String, String> qryParams, Object body, Type returnType){
 
         HttpResponse resp = super.request(method, uri, qryParams, body);
         try{
@@ -28,6 +29,12 @@ public abstract class BaseHttpJsonClient extends BaseHttpClient {
         }catch(Exception e){
             throw new ResponseJsonParseException(resp, returnType);
         }
+    }
+
+    protected virtual override HttpRequest genRequest(String method, String uri){
+        HttpRequest req = super.genRequest(method,uri);
+        req.setHeader('Content-Type', 'application/json');
+        return req;
     }
 
     /* parse JSON/XML/Other to response DTO type */

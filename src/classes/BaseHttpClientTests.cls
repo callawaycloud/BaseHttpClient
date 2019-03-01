@@ -1,4 +1,5 @@
 //test coverage could be improved, but actual implementation tests should will validate base functionality
+// giturl: https://github.com/ChuckJonas/BaseHttpClient
 @isTest
 private class BaseHttpClientTests {
 
