@@ -1,5 +1,5 @@
 /**
-* Base Client v1.0
+* Base Client v1.1
 */
 public abstract class BaseHttpClient {
     protected String baseProductionEndpoint;
@@ -105,7 +105,7 @@ public abstract class BaseHttpClient {
         public HttpRequestException(HttpRequest req, HttpResponse resp){
             this.req = req;
             this.resp = resp;
-            this.setMessage('HttpRequest Error! Status Code: ' + resp.getStatusCode() + ' Message: ' + resp.getStatus());
+            this.setMessage('Failed HTTP Request! Status: ' + resp.getStatusCode() + ' - ' + resp.getStatus() + ' Body: ' + resp.getBody());
         }
     }
 }
