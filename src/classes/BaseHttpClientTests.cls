@@ -16,6 +16,33 @@ private class BaseHttpClientTests {
         System.assertEquals('ENDPOINT/testUri?param1=paramValue1&param2=paramValue2', url);
     }
 
+    @isTest
+    private static void testSucessfulRequest(){
+        Test.setMock(HttpCalloutMock.class, new TestClientMockImpl());
+        Test.startTest();
+             TestClient client = new TestClient();
+             TestDTO requestDto = new TestDTO();
+             requestDto.foo = 'hello world';
+             TestDTO responseDTO = client.fooRequest(requestDto);
+        Test.stopTest();
+
+        System.assertEquals(requestDto.foo, responseDTO.foo);
+    }
+
+    @isTest
+    private static void testBadResponseFormat(){
+        Test.setMock(HttpCalloutMock.class, new TestClientMockImpl());
+        Test.startTest();
+             TestClient client = new TestClient();
+             try{
+                TestDTO responseDTO = client.badRequest('hello world');
+                System.assert(false, 'should have thrown exception');
+             }catch(BaseHttpJsonClient.ResponseJsonParseException e){
+                system.assertEquals(e.resp.getBody(), 'hello world');
+             }
+        Test.stopTest();
+    }
+
     public class TestDTO {
         public string foo;
     }
@@ -24,5 +51,23 @@ private class BaseHttpClientTests {
         public TestClient(){
             super('ENDPOINT');
         }
+
+        public TestDTO fooRequest(TestDTO dto){
+            return (TestDTO) super.request('POST','foo', null, dto, TestDTO.class);
+        }
+
+        public TestDTO badRequest(String s){
+            return (TestDTO) super.request('POST','foo', null, s, TestDTO.class);
+        }
     }
+
+    public class TestClientMockImpl implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest req) {
+            HttpResponse res = new HttpResponse();
+            res.setBody(req.getBody());
+            res.setStatusCode(200);
+            return res;
+        }
+    }
+
 }
