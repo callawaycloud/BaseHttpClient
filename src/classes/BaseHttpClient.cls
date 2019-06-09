@@ -85,7 +85,7 @@ public abstract class BaseHttpClient {
 
     /** throw an error if the request didn't succeed! */
     protected virtual void checkResponse(HttpRequest req, HttpResponse resp){
-        if(resp.getStatusCode() < 200 || resp.getStatusCode() >= 300){
+        if(resp.getStatusCode() >= 400){
             throw new HttpRequestException(req, resp);
         }
     }
