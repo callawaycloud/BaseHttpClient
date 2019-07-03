@@ -1,0 +1,18 @@
+{
+    "packageDirectories": [
+        {
+            "path": "src",
+            "package": "BaseHttpClient",
+            "versionName": "ver 0.2",
+            "versionNumber": "0.2.0.NEXT",
+            "default": true
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "45.0",
+    "packageAliases": {
+        "BaseHttpClient": "0Ho1C0000004CAGSA2",
+        "BaseHttpClient@0.2.0-1": "04t1C000000tfGvQAI"
+    }
+}

@@ -4,9 +4,18 @@ A base class to make it quick and easy to implement a Http Client.  Designed pri
 
 ## Install
 
-1. `git clone`
-1. `cd` into folder
-1. `sfdx force:mdapi:deploy -d ./src -w 10000 -u [username]`
+### Unlocked Package (RECOMMENDED)
+
+- via URL: [/packaging/installPackage.apexp?p0=04t1C000000tfGvQAI](https://login.salesforce.com/packaging/installPackage.apexp?p0=04t1C000000tfGvQAI)
+
+**OR**
+
+- via sfdx-cli: `sfdx force:package:install --wait 10 --publishwait 10 --package 04t1C000000tfGvQAI --noprompt -u you@yourorg`
+
+
+### From Source
+1. `sfdx force:source:convert -d deploy-package`
+2. `sfdx force:mdapi:deploy -d deploy-package -u you@yourorg -w 1000`
 
 ## Classes
 
