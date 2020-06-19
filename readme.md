@@ -39,9 +39,9 @@ public class SuperDuperClient extends BaseHttpJsonClient {
     }
 
     // implement public client methods
-    public SuperDuper getSuperDuper(String fooParam, String barBody){
+    public SuperDuper doSuperDuperRequest(String fooParam, String barBody){
         return (SuperDuper) request(
-            'GET',                  //method
+            'POST',                 //method
             'foo',                  //url
             new Map<String,String>{ //params
                 'foo' => fooParam
@@ -81,5 +81,5 @@ With the `BaseHttpJsonClient` you can override the `parseResponse` method if you
 
 ```java
     SuperDuperClient spc = new SuperDuperClient();
-    SuperDuper sp = spc.getSuperDuper('fooooooo', 'bar!');
+    SuperDuper sp = spc.doSuperDuperRequest('fooooooo', 'bar!');
 ```
