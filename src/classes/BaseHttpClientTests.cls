@@ -42,6 +42,18 @@ private class BaseHttpClientTests {
              }
         Test.stopTest();
     }
+     @isTest
+    private static void testSucessfulRequestHttpEncoded(){
+        Test.setMock(HttpCalloutMock.class, new TestClientMockImpl());
+        Test.startTest();
+             TestClient2 client = new TestClient2();
+             TestDTO requestDto = new TestDTO();
+             requestDto.foo = 'hello world';
+             TestDTO responseDTO = client.fooRequest(requestDto);
+        Test.stopTest();
+
+        System.assertEquals(requestDto.foo, responseDTO.foo);
+    }
 
     public class TestDTO {
         public string foo;
@@ -60,11 +72,30 @@ private class BaseHttpClientTests {
             return (TestDTO) super.request('POST','foo', null, s, TestDTO.class);
         }
     }
+    public class TestClient2 extends BaseHttpUrlEncodedClient{
+         public TestClient2(){
+            super('ENDPOINT2');
+        }
+
+        public TestDTO fooRequest(TestDTO dto){
+            return (TestDTO) super.request('POST','foo', null, new Map<String, String>{'hello'=> 'world'}, TestDTO.class);
+        }
+
+    }
 
     public class TestClientMockImpl implements HttpCalloutMock {
         public HTTPResponse respond(HTTPRequest req) {
             HttpResponse res = new HttpResponse();
-            res.setBody(req.getBody());
+            string s = req.getBody();
+            //This is a hack for the fact that
+            //for all the other tests the DTO Body deserlizes into the object
+            //but for the Form Encoded tests it doesnt, so
+            //we swap bodies to match the FOO
+            if(s == 'hello=world'){
+                res.setBody('{\"foo\":\"hello world\"}');
+            }else{
+                res.setBody(req.getBody());
+            }
             res.setStatusCode(200);
             return res;
         }
