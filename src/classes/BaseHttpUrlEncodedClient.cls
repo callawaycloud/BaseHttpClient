@@ -89,6 +89,7 @@ public abstract class BaseHttpUrlEncodedClient extends BaseHttpClient {
                                     + key + '=' + EncodingUtil.urlEncode(params.get(key), 'UTF-8');
                 } catch (Exception e) {
                     System.debug('ERROR: ' + e);
+                    throw e;
                 }
             }
         }
