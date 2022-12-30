@@ -1,6 +1,6 @@
 # Apex BaseHttpClient
 
-A base class to make it quick and easy to implement a Http Client.  Designed primarily with JSON rest API's in mind, but could be used for other requests.
+A base class to make it quick and easy to implement a Http Client. Designed primarily with JSON rest API's in mind, but could be used for other requests.
 
 ## Install
 
@@ -12,18 +12,19 @@ A base class to make it quick and easy to implement a Http Client.  Designed pri
 
 - via sfdx-cli: `sfdx force:package:install --wait 10 --publishwait 10 --package 04t1C000000tfGvQAI --noprompt -u you@yourorg`
 
-
 ### From Source
+
 1. `sfdx force:source:convert -d deploy-package`
 2. `sfdx force:mdapi:deploy -d deploy-package -u you@yourorg -w 1000`
 
 ## Classes
 
-- `BaseHttpClient`: base class to make any type of HttpRequest.  Doesn't transform responses
+- `BaseHttpClient`: base class to make any type of HttpRequest. Doesn't transform responses
 - `BaseHttpJsonClient`: Extends `BaseHttpClient` with automatic deserialization of JSON
+- `BaseHttpUrlEncodedClient`: Extends `BaseHttpClient` with automatic `www-url-encoded` encoding from a `Map<string, string>`
 - `BaseHttpClientTest`: unit tests
 
-*will eventually implement an `BaseHttpXMLClient` should I ever need one. (PR's welcome)*
+_will eventually implement an `BaseHttpXMLClient` should I ever need one. (PR's welcome)_
 
 ## Usage
 
@@ -55,9 +56,9 @@ public class SuperDuperClient extends BaseHttpJsonClient {
 
 ### Customize
 
-If you need to change the way any of the default behavior works, you can easily do so by overriding any of the methods.  A common use case would be to override the `genRequest` method to add headers:
+If you need to change the way any of the default behavior works, you can easily do so by overriding any of the methods. A common use case would be to override the `genRequest` method to add headers:
 
-``` java
+```java
     protected override HttpRequest genRequest(String method, String uri){
         //call super method to init request
         HttpRequest req = super.genRequest(method, uri);
